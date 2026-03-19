@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1400">
     <Grid>
-		<views:MainView/>
-	</Grid>
+        <ContentControl x:Name="MainContent"/>
+    </Grid>
 </Window>
