@@ -112,6 +112,10 @@
     <Compile Include="Commands\Email\PreviewEmailCommand.cs" />
     <Compile Include="Commands\Email\SendEmailCommand.cs" />
     <Compile Include="Commands\ShowVictimsCommand.cs" />
+    <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.cs" />
+    <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.Designer.cs">
+      <DependentUpon>202603191352044_ChangedNameEmailsSent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service\FormDataService.cs" />
     <Compile Include="Service\VictimService.cs" />
     <Compile Include="Config\CORSBehavior.cs" />
@@ -209,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202603181258191_RenamedDbModelsToEntities.resx">
       <DependentUpon>202603181258191_RenamedDbModelsToEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603191352044_ChangedNameEmailsSent.resx">
+      <DependentUpon>202603191352044_ChangedNameEmailsSent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
