@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +15,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +41,15 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.8.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.8\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.24.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.24\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.29.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.29\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -50,6 +62,9 @@
     <Reference Include="MailKit, Version=2.10.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.2.10.0\lib\net47\MailKit.dll</HintPath>
     </Reference>
+    <Reference Include="MaxMind.GeoIP, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaxMind.GeoIP.2.1.17\lib\net35\MaxMind.GeoIP.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -60,11 +75,15 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,25 +103,60 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\AddImageCommand.cs" />
-    <Compile Include="Commands\AddLinkCommand.cs" />
-    <Compile Include="Commands\ChangeLinksCommand.cs" />
-    <Compile Include="Commands\EmailReadCommand.cs" />
-    <Compile Include="Commands\InitializeCommand.cs" />
-    <Compile Include="Commands\ParseEmailCommand.cs" />
-    <Compile Include="Commands\PreviewEmailCommand.cs" />
-    <Compile Include="Commands\SendEmailCommand.cs" />
-    <Compile Include="Commands\ShowExploitedVictimsCommand.cs" />
-    <Compile Include="Commands\StatisticCommand.cs" />
-    <Compile Include="Commands\StatisticsService.cs" />
+    <Compile Include="Commands\Email\AddImageCommand.cs" />
+    <Compile Include="Commands\Email\AddLinkCommand.cs" />
+    <Compile Include="Commands\Email\ChangeLinksCommand.cs" />
+    <Compile Include="Commands\Email\ImportEmailAddressesCommand.cs" />
+    <Compile Include="Commands\InitializeStatisticsCommand.cs" />
+    <Compile Include="Commands\Email\ImportEmailTemplateCommand.cs" />
+    <Compile Include="Commands\Email\PreviewEmailCommand.cs" />
+    <Compile Include="Commands\Email\SendEmailCommand.cs" />
+    <Compile Include="Commands\ShowVictimsCommand.cs" />
+    <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.cs" />
+    <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.Designer.cs">
+      <DependentUpon>202603191352044_ChangedNameEmailsSent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\FormDataService.cs" />
+    <Compile Include="Service\VictimService.cs" />
+    <Compile Include="Config\CORSBehavior.cs" />
+    <Compile Include="Config\StaticFileService.cs" />
+    <Compile Include="Database\PhishingAppDbContext.cs" />
+    <Compile Include="Helpers\IpCountryLookupService.cs" />
+    <Compile Include="Migrations\202603121547248_InitialCreate.cs" />
+    <Compile Include="Migrations\202603121547248_InitialCreate.Designer.cs">
+      <DependentUpon>202603121547248_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202603170949272_Added Timestamp.cs" />
+    <Compile Include="Migrations\202603170949272_Added Timestamp.Designer.cs">
+      <DependentUpon>202603170949272_Added Timestamp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202603171508090_AddedWebsiteModel.cs" />
+    <Compile Include="Migrations\202603171508090_AddedWebsiteModel.Designer.cs">
+      <DependentUpon>202603171508090_AddedWebsiteModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202603171711264_AddedIpAddress.cs" />
+    <Compile Include="Migrations\202603171711264_AddedIpAddress.Designer.cs">
+      <DependentUpon>202603171711264_AddedIpAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202603171937034_AddedCountry.cs" />
+    <Compile Include="Migrations\202603171937034_AddedCountry.Designer.cs">
+      <DependentUpon>202603171937034_AddedCountry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202603181258191_RenamedDbModelsToEntities.cs" />
+    <Compile Include="Migrations\202603181258191_RenamedDbModelsToEntities.Designer.cs">
+      <DependentUpon>202603181258191_RenamedDbModelsToEntities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\EmailModel.cs" />
     <Compile Include="Model\PieChartModel.cs" />
     <Compile Include="Model\StatisticsModel.cs" />
     <Compile Include="Model\ValidationModel.cs" />
-    <Compile Include="Model\VictimModel.cs" />
+    <Compile Include="Entity\Victim.cs" />
+    <Compile Include="Entity\Website.cs" />
+    <Compile Include="Service\WebsiteService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="Views\ExploitedVictimsWindow.xaml.cs">
-      <DependentUpon>ExploitedVictimsWindow.xaml</DependentUpon>
+    <Compile Include="Views\VictimsWindow.xaml.cs">
+      <DependentUpon>VictimsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -119,7 +173,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ExploitedVictimsWindow.xaml">
+    <Page Include="Views\VictimsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,10 +196,32 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202603121547248_InitialCreate.resx">
+      <DependentUpon>202603121547248_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603170949272_Added Timestamp.resx">
+      <DependentUpon>202603170949272_Added Timestamp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603171508090_AddedWebsiteModel.resx">
+      <DependentUpon>202603171508090_AddedWebsiteModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603171711264_AddedIpAddress.resx">
+      <DependentUpon>202603171711264_AddedIpAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603171937034_AddedCountry.resx">
+      <DependentUpon>202603171937034_AddedCountry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603181258191_RenamedDbModelsToEntities.resx">
+      <DependentUpon>202603181258191_RenamedDbModelsToEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603191352044_ChangedNameEmailsSent.resx">
+      <DependentUpon>202603191352044_ChangedNameEmailsSent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Helpers\ip_country_ranges.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -156,13 +232,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\emails_background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Contracts\Common.csproj">
       <Project>{3c75ebeb-cb1f-4516-aa37-b1baffc03a5c}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Webpages\Default\index.html" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
 </Project>

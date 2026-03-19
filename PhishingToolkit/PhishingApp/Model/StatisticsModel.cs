@@ -1,14 +1,13 @@
-﻿using System;
+﻿using PhishingApp.Service;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace PhishingApp.Model
 {
-	public class StatisticsModel : INotifyPropertyChanged
-	{
+    public class StatisticsModel : INotifyPropertyChanged
+    {
+        private readonly Dispatcher _dispatcher;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -24,7 +23,8 @@ namespace PhishingApp.Model
         public int SentMails
         {
             get { return sentMails; }
-            set { 
+            set
+            {
                 sentMails = value;
                 OnPropertyChanged("SentMails");
             }
@@ -35,30 +35,43 @@ namespace PhishingApp.Model
         public int FormsFilled
         {
             get { return formsFilled; }
-            set {
+            set
+            {
                 formsFilled = value;
                 OnPropertyChanged("FormsFilled");
             }
         }
 
-        private Dictionary<string,VictimModel> exploitedVictims;
+        private Dictionary<string, Victim> victims;
 
-        public Dictionary<string,VictimModel> ExploitedVictims
+        public Dictionary<string, Victim> Victims
         {
-            get { return exploitedVictims; }
-            set {
-                exploitedVictims = value;
-                OnPropertyChanged("ExploitedVictims");
+            get { return victims; }
+            set
+            {
+                victims = value;
+                OnPropertyChanged("Victims");
             }
         }
 
-
         public StatisticsModel()
         {
-            ExploitedVictims = new Dictionary<string, VictimModel>();
+            sentMails = 0;
+            formsFilled = 0;
+            Victims = new Dictionary<string, Victim>();
+
+            _dispatcher = Dispatcher.CurrentDispatcher;
+            FormDataService.OnFormFilled += OnFormFilledReceived;
         }
 
-
-
+        private void OnFormFilledReceived(Victim victim)
+        {
+            //Coming from a WCF thread so OnPropertyChanged isnt being recognized
+            _dispatcher.Invoke(() =>
+            {
+                Victims.Add(victim.Email, victim);
+                FormsFilled++;
+            });
+        }
     }
 }
