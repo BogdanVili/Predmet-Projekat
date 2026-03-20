@@ -42,7 +42,7 @@ namespace PhishingApp.Commands
             ParseEMLFile(path);
         }
 
-        public string BrowseEMLFiles()
+        private string BrowseEMLFiles()
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog()
             {
@@ -60,7 +60,7 @@ namespace PhishingApp.Commands
             return "";
         }
 
-        public void ParseEMLFile(string path)
+        private void ParseEMLFile(string path)
         {
             if (path == "")
                 return;

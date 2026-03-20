@@ -1,23 +1,17 @@
 ﻿using MimeKit;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace PhishingApp.Model
 {
-	public class EmailModel : INotifyPropertyChanged
-	{
+    public class EmailModel : INotifyPropertyChanged
+    {
         private bool htmlImported;
 
         public bool HtmlImported
         {
             get { return htmlImported; }
             set
-            { 
+            {
                 htmlImported = value;
                 OnPropertyChanged("HtmlImported");
             }
@@ -29,7 +23,7 @@ namespace PhishingApp.Model
         public string Validate
         {
             get { return validate; }
-            set 
+            set
             {
                 validate = value;
                 OnPropertyChanged("Validate");
@@ -51,7 +45,8 @@ namespace PhishingApp.Model
         public string Emails
         {
             get { return emails; }
-            set {
+            set
+            {
                 emails = value;
                 OnPropertyChanged("Emails");
             }
@@ -62,7 +57,8 @@ namespace PhishingApp.Model
         public string Body
         {
             get { return body; }
-            set {
+            set
+            {
 
                 body = value;
                 OnPropertyChanged("Body");
@@ -74,7 +70,8 @@ namespace PhishingApp.Model
         public string MaliciousLink
         {
             get { return maliciousLink; }
-            set { 
+            set
+            {
                 maliciousLink = value;
                 OnPropertyChanged("MaliciousLink");
             }
@@ -85,7 +82,8 @@ namespace PhishingApp.Model
         public string HtmlBody
         {
             get { return htmlBody; }
-            set {
+            set
+            {
                 htmlBody = value;
                 OnPropertyChanged("HtmlBody");
             }
@@ -96,55 +94,33 @@ namespace PhishingApp.Model
         public string HtmlBodyHelper
         {
             get { return htmlBodyHelper; }
-            set 
-            { 
+            set
+            {
                 htmlBodyHelper = value;
                 OnPropertyChanged("HtmlBodyHelper");
             }
         }
-
-
 
         private string senderName;
 
         public string SenderName
         {
             get { return senderName; }
-            set { 
+            set
+            {
                 senderName = value;
                 OnPropertyChanged("SenderName");
             }
         }
 
-        private string senderPassword;
-
-        public string SenderPassword
-        {
-            get { return senderPassword; }
-            set { 
-                senderPassword = value;
-                OnPropertyChanged("SenderPassword");
-            }
-        }
-
-
-        private string senderEmail;
-
-        public string SenderEmail
-        {
-            get { return senderEmail; }
-            set { 
-                senderEmail = value;
-                OnPropertyChanged("SenderEmail");
-            }
-        }
 
         private string recipientName;
 
         public string RecipientName
         {
             get { return recipientName; }
-            set { 
+            set
+            {
                 recipientName = value;
                 OnPropertyChanged("RecipientName");
             }
@@ -155,7 +131,8 @@ namespace PhishingApp.Model
         public string EmailSubject
         {
             get { return emailSubject; }
-            set {
+            set
+            {
                 emailSubject = value;
                 OnPropertyChanged("EmailSubject");
             }
@@ -166,7 +143,8 @@ namespace PhishingApp.Model
         public BodyBuilder BodyBuilder
         {
             get { return bodyBuilder; }
-            set { 
+            set
+            {
                 bodyBuilder = value;
                 OnPropertyChanged("BodyBuilder");
             }
@@ -177,7 +155,8 @@ namespace PhishingApp.Model
         public string LinkToAdd
         {
             get { return linkToAdd; }
-            set { 
+            set
+            {
                 linkToAdd = value;
                 OnPropertyChanged("LinkToAdd");
             }
@@ -188,8 +167,8 @@ namespace PhishingApp.Model
         public string TextForLink
         {
             get { return textForLink; }
-            set 
-            { 
+            set
+            {
                 textForLink = value;
                 OnPropertyChanged("TextForLink");
             }
@@ -200,7 +179,7 @@ namespace PhishingApp.Model
         public string HtmlForPreview
         {
             get { return htmlForPreview; }
-            set 
+            set
             {
                 htmlForPreview = value;
                 OnPropertyChanged("HtmlForPreview");
@@ -218,7 +197,7 @@ namespace PhishingApp.Model
             }
         }
 
-     
+
         public EmailModel()
         {
             MessageToSend = new MimeMessage();

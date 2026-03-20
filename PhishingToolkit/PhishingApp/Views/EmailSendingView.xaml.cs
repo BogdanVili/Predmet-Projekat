@@ -6,12 +6,12 @@ namespace PhishingApp.Views
     /// <summary>
     /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class EmailSendingView : UserControl
     {
-        public MainView()
+        public EmailSendingView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new EmailSendingViewModel();
         }
     }
 }

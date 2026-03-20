@@ -6,8 +6,26 @@
         xmlns:local="clr-namespace:PhishingApp"
 		xmlns:views ="clr-namespace:PhishingApp.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1400">
+        Title="MainWindow" Height="900" Width="1100">
     <Grid>
-        <ContentControl x:Name="MainContent"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Email Sending"
+                    Width="150"
+                    Height="35"
+                    Margin="10"
+                    Click="EmailSendingView_Click"/>
+            <Button Content="Victims"
+                    Width="170"
+                    Height="36"
+                    Click="Exploited_Click"/>
+        </StackPanel>
+
+        <ContentControl x:Name="MainContent"
+                        Grid.Row="1"/>
     </Grid>
 </Window>

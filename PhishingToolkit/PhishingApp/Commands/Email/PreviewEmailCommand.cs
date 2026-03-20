@@ -1,4 +1,5 @@
-﻿using PhishingApp.Model;
+﻿using PhishingApp.Helpers;
+using PhishingApp.Model;
 using System;
 using System.IO;
 using System.Windows.Input;
@@ -63,32 +64,7 @@ namespace PhishingApp.Commands
 
                 if (_emailModel.Body != null)
                 {
-                    if (_emailModel.HtmlBody == null)
-                    {
-                        _emailModel.HtmlBody = "\n" + "<p style=\"white-space: pre-line\">" + _emailModel.Body + "</p>" + "\n";
-                        _emailModel.HtmlBodyHelper = _emailModel.Body;
-
-                        // za preview
-                        _emailModel.HtmlForPreview = "\n" + "<p style=\"white-space: pre-line\">" + _emailModel.Body + "</p>" + "\n";
-                    }
-                    else
-                    {
-                        string temp = _emailModel.Body.Substring(_emailModel.HtmlBodyHelper.Length);
-
-                        if (temp == "")
-                        {
-
-                        }
-                        else
-                        {
-                            _emailModel.HtmlBody += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
-
-                            _emailModel.HtmlBodyHelper = _emailModel.Body;
-
-                            // za preview
-                            _emailModel.HtmlForPreview += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
-                        }
-                    }
+                    EmailHelper.FormatBody(_emailModel);
                 }
 
                 // zato sto prikazujes html u body mora ova linija koda
@@ -104,9 +80,7 @@ namespace PhishingApp.Commands
                 }
 
                 System.Diagnostics.Process.Start("Preview.html");
-
             }
         }
-
     }
 }

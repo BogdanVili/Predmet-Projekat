@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace PhishingApp.Commands
 {
-    public class ChangeLinksCommand : ICommand
+    public class ChangeLinksToMaliciousCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -22,7 +22,7 @@ namespace PhishingApp.Commands
 
         private readonly ValidationModel _validationModel;
 
-        public ChangeLinksCommand(EmailModel emailModel, ValidationModel validationModel)
+        public ChangeLinksToMaliciousCommand(EmailModel emailModel, ValidationModel validationModel)
         {
             _emailModel = emailModel;
             _validationModel = validationModel;

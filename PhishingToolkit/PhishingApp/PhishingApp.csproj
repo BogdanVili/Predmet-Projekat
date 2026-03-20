@@ -105,13 +105,13 @@
     </ApplicationDefinition>
     <Compile Include="Commands\Email\AddImageCommand.cs" />
     <Compile Include="Commands\Email\AddLinkCommand.cs" />
-    <Compile Include="Commands\Email\ChangeLinksCommand.cs" />
+    <Compile Include="Commands\Email\ChangeLinksToMaliciousCommand.cs" />
     <Compile Include="Commands\Email\ImportEmailAddressesCommand.cs" />
-    <Compile Include="Commands\InitializeStatisticsCommand.cs" />
+    <Compile Include="Commands\Statistics\InitializeStatisticsCommand.cs" />
     <Compile Include="Commands\Email\ImportEmailTemplateCommand.cs" />
     <Compile Include="Commands\Email\PreviewEmailCommand.cs" />
     <Compile Include="Commands\Email\SendEmailCommand.cs" />
-    <Compile Include="Commands\ShowVictimsCommand.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.cs" />
     <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.Designer.cs">
       <DependentUpon>202603191352044_ChangedNameEmailsSent.cs</DependentUpon>
@@ -154,12 +154,13 @@
     <Compile Include="Entity\Victim.cs" />
     <Compile Include="Entity\Website.cs" />
     <Compile Include="Service\WebsiteService.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="Views\VictimsWindow.xaml.cs">
-      <DependentUpon>VictimsWindow.xaml</DependentUpon>
+    <Compile Include="ViewModel\EmailSendingViewModel.cs" />
+    <Compile Include="ViewModel\VictimViewModel.cs" />
+    <Compile Include="Views\EmailSendingView.xaml.cs">
+      <DependentUpon>EmailSendingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
+    <Compile Include="Views\VictimView.xaml.cs">
+      <DependentUpon>VictimView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -173,11 +174,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\VictimsWindow.xaml">
+    <Page Include="Views\EmailSendingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainView.xaml">
+    <Page Include="Views\VictimView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

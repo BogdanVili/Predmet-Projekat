@@ -1,4 +1,5 @@
-﻿using PhishingApp.Service;
+﻿using PhishingApp.Commands;
+using PhishingApp.Service;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Threading;
@@ -18,15 +19,15 @@ namespace PhishingApp.Model
             }
         }
 
-        private int sentMails;
+        private int emailsSent;
 
-        public int SentMails
+        public int EmailsSent
         {
-            get { return sentMails; }
+            get { return emailsSent; }
             set
             {
-                sentMails = value;
-                OnPropertyChanged("SentMails");
+                emailsSent = value;
+                OnPropertyChanged("EmailsSent");
             }
         }
 
@@ -42,9 +43,9 @@ namespace PhishingApp.Model
             }
         }
 
-        private Dictionary<string, Victim> victims;
+        private List<Victim> victims;
 
-        public Dictionary<string, Victim> Victims
+        public List<Victim> Victims
         {
             get { return victims; }
             set
@@ -56,12 +57,13 @@ namespace PhishingApp.Model
 
         public StatisticsModel()
         {
-            sentMails = 0;
+            emailsSent = 0;
             formsFilled = 0;
-            Victims = new Dictionary<string, Victim>();
+            Victims = new List<Victim>();
 
             _dispatcher = Dispatcher.CurrentDispatcher;
             FormDataService.OnFormFilled += OnFormFilledReceived;
+            SendEmailCommand.OnEmailsSent += OnEmailsSentReceived;
         }
 
         private void OnFormFilledReceived(Victim victim)
@@ -69,9 +71,14 @@ namespace PhishingApp.Model
             //Coming from a WCF thread so OnPropertyChanged isnt being recognized
             _dispatcher.Invoke(() =>
             {
-                Victims.Add(victim.Email, victim);
+                Victims.Add(victim);
                 FormsFilled++;
             });
+        }
+
+        private void OnEmailsSentReceived(int emailsSentCount)
+        {
+            EmailsSent++;
         }
     }
 }

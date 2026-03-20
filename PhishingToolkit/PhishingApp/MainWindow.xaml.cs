@@ -12,7 +12,17 @@ namespace PhishingApp
         {
             InitializeComponent();
 
-            MainContent.Content = new MainView();
+            MainContent.Content = new EmailSendingView();
+        }
+
+        private void EmailSendingView_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new EmailSendingView();
+        }
+
+        private void Exploited_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new VictimView();
         }
     }
 }

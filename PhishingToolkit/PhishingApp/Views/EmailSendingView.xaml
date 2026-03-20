@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="PhishingApp.Views.EmailSendingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PhishingApp.Views"
+			 xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+			 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Grid.Background >
+            <SolidColorBrush Color="LightGray"/>
+        </Grid.Background>
+
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Import email" HorizontalAlignment="Left" Margin="28,24,0,0" VerticalAlignment="Top" Width="89" Height="28" Command="{Binding Path=ImportEmailTemplateCommand}" RenderTransformOrigin="0.521,2.161" FontSize="12"/>
+        <Button Background="CadetBlue" ToolTipService.ShowOnDisabled="true" BorderBrush="Black" BorderThickness="2" Content="Preview" HorizontalAlignment="Left"  Margin="122,24,0,0" VerticalAlignment="Top" Width="89" Height="28" Command="{Binding PreviewEmailCommand}" FontSize="12">
+            <Button.ToolTip>
+                <ToolTip Content="{Binding Path=ValidationModelPreview.Text, UpdateSourceTrigger=PropertyChanged}"/>
+            </Button.ToolTip>
+        </Button>
+
+        <Label Background="LightSlateGray" BorderBrush="Black" BorderThickness="1" Content="Malicious link:" FontSize="12" HorizontalAlignment="Left" Margin="28,77,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.469,1.345" Height="28"/>
+        <TextBox BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="28" Margin="122,77,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.MaliciousLink, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="255" RenderTransformOrigin="0.492,1.167"/>
+        <Button ToolTipService.ShowOnDisabled="true"  Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Change links" HorizontalAlignment="Left" Margin="382,77,0,0" VerticalAlignment="Top" Width="88" Height="28" Command="{Binding Path=ChangeLinksToMaliciousCommand}" RenderTransformOrigin="0.548,1.355" FontSize="12">
+            <Button.ToolTip>
+                <ToolTip Content="{Binding Path=ValidationModelChangeLinks.Text, UpdateSourceTrigger=PropertyChanged}"/>
+            </Button.ToolTip>
+        </Button>
+
+        <Label Background="SlateGray" BorderBrush="Black" BorderThickness="1" Content="Import Emails from txt file:" FontSize="12" HorizontalAlignment="Left" Margin="28,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065" Width="349" Height="28"/>
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Browse" HorizontalAlignment="Left" Margin="382,130,0,0" VerticalAlignment="Top" Width="88" Command="{Binding Path= ImportEmailAddressesCommand}" FontSize="12" Height="28"/>
+        <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" BorderBrush="Black" BorderThickness="1" Name="txtEmails" HorizontalAlignment="Left" Height="476" Margin="28,0,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Emails, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="442" FontSize="15" />
+        <Label Background="SlateGray" BorderBrush="Black" BorderThickness="1" Content="Subject:" FontSize="12" HorizontalAlignment="Left" Margin="620,25,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065" Width="88" Height="28"/>
+        <TextBox BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="28" Margin="713,25,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.EmailSubject, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="348" RenderTransformOrigin="0.358,1.261"/>
+        <Label Background="SlateGray" BorderBrush="Black" BorderThickness="1" Content="Recipient:" FontSize="12" HorizontalAlignment="Left" Margin="620,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065" Width="88" Height="28"/>
+        <TextBox BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="28" Margin="713,61,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.RecipientName, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="348"/>
+        <Label Background="SlateGray" BorderBrush="Black" BorderThickness="1" Content="Sender:" FontSize="12" HorizontalAlignment="Left" Margin="620,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065" Width="88"/>
+        <TextBox BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="28" Margin="713,97,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderName, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="348"/>
+        <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Name="txtBodyEmails" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="420" Margin="620,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Text="{Binding Path=EmailModel.Body, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Add Image" FontSize="12" HorizontalAlignment="Left" Margin="973,566,0,0" VerticalAlignment="Top" Width="88" Height="28" Command="{Binding Path=AddImageCommand}"/>
+        <Label Background="LightSlateGray" BorderBrush="Black" BorderThickness="1" FontSize="12" Content="Link Text:" HorizontalAlignment="Left" Margin="620,611,0,0" VerticalAlignment="Top" Width="88" Height="28"/>
+        <TextBox HorizontalAlignment="Left"  BorderBrush="Black" BorderThickness="1" Height="28" Margin="713,611,0,0" TextWrapping="Wrap" Text="{Binding EmailModel.TextForLink, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="348"/>
+        <Label Background="LightSlateGray" BorderBrush="Black" BorderThickness="1" FontSize="12" Content="Link:" HorizontalAlignment="Left" Margin="620,650,0,0" VerticalAlignment="Top" Width="88" Height="28"/>
+        <TextBox BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="28" Margin="713,650,0,0" TextWrapping="Wrap" Text="{Binding EmailModel.LinkToAdd, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="255" RenderTransformOrigin="0.492,1.167" />
+        <Button Content="Add link"  ToolTipService.ShowOnDisabled="true" FontSize="12" Background="CadetBlue" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Margin="973,650,0,0" VerticalAlignment="Top" Width="88" Height="28" Command="{Binding Path=AddLinkCommand}">
+            <Button.ToolTip>
+                <ToolTip Content="{Binding Path=ValidationModelAddLink.Text, UpdateSourceTrigger=PropertyChanged}"/>
+            </Button.ToolTip>
+        </Button>
+        <Button Background="CadetBlue" ToolTipService.ShowOnDisabled="true" BorderBrush="Black" BorderThickness="2" Content="Send" HorizontalAlignment="Left" Margin="917,716,0,0" VerticalAlignment="Top" Width="144" Height="45" Command="{Binding Path= SendEmailCommand}" FontSize="12">
+            <Button.ToolTip>
+                <ToolTip Content="{Binding Path=ValidationModelSendEmail.Text, UpdateSourceTrigger=PropertyChanged}"/>
+            </Button.ToolTip>
+        </Button>
+    </Grid>
+</UserControl>

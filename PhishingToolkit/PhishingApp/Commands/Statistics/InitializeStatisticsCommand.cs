@@ -40,12 +40,12 @@ namespace PhishingApp.Commands
             var victims = await _victimService.GetAllVictims();
             foreach (var victim in victims)
             {
-                _statisticsModel.Victims[victim.Email] = victim;
+                _statisticsModel.Victims.Add(victim);
             }
 
             var websiteData = await _websiteService.GetWebsiteById(1);
             _statisticsModel.FormsFilled = websiteData.FormsFilled;
-            _statisticsModel.SentMails = websiteData.EmailsSent;
+            _statisticsModel.EmailsSent = websiteData.EmailsSent;
         }
     }
 }

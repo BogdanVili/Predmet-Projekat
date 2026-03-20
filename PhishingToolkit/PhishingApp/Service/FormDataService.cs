@@ -53,7 +53,7 @@ namespace PhishingApp.Service
 
                 await _websiteService.IncrementFormsFilled(1);
 
-                OnFormFilled.Invoke(newVictim);
+                OnFormFilled?.Invoke(newVictim);
             }
         }
 

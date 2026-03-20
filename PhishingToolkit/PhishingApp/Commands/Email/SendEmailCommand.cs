@@ -1,13 +1,14 @@
-﻿using LiveCharts;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
+using PhishingApp.Helpers;
 using PhishingApp.Model;
 using PhishingApp.Service;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Globalization;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,6 +16,8 @@ namespace PhishingApp.Commands
 {
     public class SendEmailCommand : ICommand
     {
+        public static event Action<int> OnEmailsSent;
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -28,20 +31,14 @@ namespace PhishingApp.Commands
 
         private readonly EmailModel _emailModel;
 
-        private readonly StatisticsModel _statisticsModel;
-
-        private readonly PieChartModel _pieChartModel;
-
         private readonly ValidationModel _validationModelSendEmail;
 
         private readonly WebsiteService _websiteService;
 
-        public SendEmailCommand(EmailModel em, StatisticsModel sm, PieChartModel pcm, ValidationModel vm, WebsiteService websiteService)
+        public SendEmailCommand(EmailModel emailModel, ValidationModel validationModel, WebsiteService websiteService)
         {
-            _emailModel = em;
-            _statisticsModel = sm;
-            _pieChartModel = pcm;
-            _validationModelSendEmail = vm;
+            _emailModel = emailModel;
+            _validationModelSendEmail = validationModel;
             _websiteService = websiteService;
         }
 
@@ -61,14 +58,6 @@ namespace PhishingApp.Commands
             {
                 temp += "Name of sender is empty" + "\n";
             }
-            if (_emailModel.SenderEmail == string.Empty)
-            {
-                temp += "Email of sender is empty" + "\n";
-            }
-            if (_emailModel.SenderPassword == string.Empty)
-            {
-                temp += "Password of sender is empty" + "\n";
-            }
             if (_emailModel.RecipientName == string.Empty)
             {
                 temp += "Recipient name is empty" + "\n";
@@ -81,8 +70,7 @@ namespace PhishingApp.Commands
             _validationModelSendEmail.Text = temp;
 
 
-            if (_emailModel.Emails == null || _emailModel.SenderEmail.Equals("") || _emailModel.SenderName.Equals("") ||
-                _emailModel.SenderPassword.Equals("") || _emailModel.RecipientName.Equals("") || _emailModel.Body == null ||
+            if (_emailModel.Emails == null || _emailModel.SenderName.Equals("") || _emailModel.RecipientName.Equals("") || _emailModel.Body == null ||
                 _emailModel.EmailSubject.Equals(""))
             {
                 return false;
@@ -93,39 +81,98 @@ namespace PhishingApp.Commands
 
         public async void Execute(object parameter)
         {
-            string[] emailArray;
-            emailArray = _emailModel.Emails.Split('\n');
-            //Last string of array ends up being /n
-            if (emailArray[emailArray.Length - 1] == "\n")
-                Array.Resize(ref emailArray, emailArray.Length - 1);
-
-
-            //when hitting enter in textbox \r is put
-            for (int i = 0; i < emailArray.Length; i++)
+            List<string> emailAddresses = EmailAddressArrayFormatAndValidation();
+            if (emailAddresses == null)
             {
-                emailArray[i] = emailArray[i].Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+                return;
             }
+
+            EmailTemplateFormatting();
 
             string smtpHost = ConfigurationManager.AppSettings.Get("smtpHost");
             int smtpPort = Int32.Parse(ConfigurationManager.AppSettings.Get("smtpPort"));
             bool smtpUseSSL = Boolean.Parse(ConfigurationManager.AppSettings.Get("smtpUseSSL"));
+            var senderEmail = ConfigurationManager.AppSettings.Get("senderEmail");
+            var senderPassword = ConfigurationManager.AppSettings.Get("senderPassword");
 
+            _emailModel.MessageToSend.From.Add(new MailboxAddress(_emailModel.SenderName, senderEmail));
 
-
-            foreach (string email in emailArray)
+            foreach (string email in emailAddresses)
             {
-                if (!email.Equals("") || !IsValidEmail(email))
+                _emailModel.MessageToSend.To.Add(new MailboxAddress(_emailModel.RecipientName, email));
+
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    client.Connect(smtpHost, smtpPort, smtpUseSSL);
+                    try
+                    {
+                        client.Authenticate(senderEmail, senderPassword);
+                    }
+                    catch (AuthenticationException error)
+                    {
+                        MessageBox.Show($"Problem with your sender {error.Message}");
+                        return;
+                    }
+
+                    try
+                    {
+                        await client.SendAsync(_emailModel.MessageToSend);
+                    }
+                    catch (SmtpCommandException) { }
+
+                    client.Disconnect(true);
+                }
+
+                _emailModel.MessageToSend.To.RemoveAt(0);
+            }
+
+            var currentSentMails = emailAddresses.Count;
+
+            await _websiteService.IncrementEmailsSent(1, currentSentMails);
+            var website = await _websiteService.GetWebsiteById(1);
+
+            OnEmailsSent?.Invoke(emailAddresses.Count);
+
+            MessageBox.Show("Messages sent.");
+        }
+
+        private List<string> EmailAddressArrayFormatAndValidation()
+        {
+            List<string> emails = _emailModel.Emails.Split('\n').ToList();
+
+            string lastElement = emails[emails.Count - 1];
+            if (lastElement == "\n" || lastElement == "\r\n" || lastElement == "\r" || lastElement == "")
+            {
+                emails.RemoveAt(emails.Count - 1);
+            }
+
+            for (int i = 0; i < emails.Count; i++)
+            {
+                emails[i] = emails[i].Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+            }
+
+            emails.RemoveAll(e => e == null || e == "");
+
+            foreach (string email in emails)
+            {
+                if (email.Equals("") || !EmailHelper.IsValidEmail(email))
                 {
                     MessageBox.Show("Not all mails in the list are in a valid email format!");
-                    return;
+                    return null;
                 }
             }
 
+            return emails;
+        }
+
+        private void EmailTemplateFormatting()
+        {
 
             if (_emailModel.HtmlImported)
             {
                 _emailModel.MessageToSend.Body = new TextPart("html") { Text = _emailModel.Body };
-
             }
             else
             {
@@ -141,14 +188,9 @@ namespace PhishingApp.Commands
                 {
                     string temp = _emailModel.Body.Substring(_emailModel.HtmlBodyHelper.Length);
 
-                    if (temp == "")
-                    {
-
-                    }
-                    else
+                    if (temp != "")
                     {
                         _emailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
-
                         _emailModel.HtmlBodyHelper = _emailModel.Body;
                     }
                 }
@@ -162,106 +204,14 @@ namespace PhishingApp.Commands
 
 
                 _emailModel.MessageToSend.Body = _emailModel.BodyBuilder.ToMessageBody();
-
             }
 
-
-
-            foreach (string email in emailArray)
-            {
-                _emailModel.MessageToSend.From.Add(new MailboxAddress(_emailModel.SenderName, _emailModel.SenderEmail));
-                _emailModel.MessageToSend.To.Add(new MailboxAddress(_emailModel.RecipientName, email));
-                _emailModel.MessageToSend.Subject = _emailModel.EmailSubject;
-
-
-                using (var client = new SmtpClient())
-                {
-                    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                    client.Connect(smtpHost, smtpPort, smtpUseSSL); // mozda 465
-                    // Note: only needed if the SMTP server requires authentication
-                    try
-                    {
-                        client.Authenticate(_emailModel.SenderEmail, _emailModel.SenderPassword);
-
-                    }
-                    catch (AuthenticationException)
-                    {
-                        _emailModel.Validate = "Invalid email or password, try again";
-                        MessageBox.Show("Invalid email or password, try again");
-                        return;
-                    }
-
-                    try
-                    {
-                        await client.SendAsync(_emailModel.MessageToSend);
-
-                    }
-                    catch (SmtpCommandException) { }
-
-                    client.Disconnect(true);
-                }
-
-            }
-
-            var currentSentMails = emailArray.Length;
-
-            await _websiteService.IncrementEmailsSent(1, currentSentMails);
-            var website = await _websiteService.GetWebsiteById(1);
-
-            _statisticsModel.SentMails = website.EmailsSent;
-
-            _pieChartModel.SentMailsSeries = new ChartValues<int>() { emailArray.Length };
-
-            MessageBox.Show("Messages sent.");
+            _emailModel.MessageToSend.Subject = _emailModel.EmailSubject;
         }
-
 
         public static bool IsValidEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
-
-            try
-            {
-                // Normalize the domain
-                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
-                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
-
-                // Examines the domain part of the email and normalizes it.
-                string DomainMapper(Match match)
-                {
-                    // Use IdnMapping class to convert Unicode domain names.
-                    var idn = new IdnMapping();
-
-                    // Pull out and process domain name (throws ArgumentException on invalid)
-                    string domainName = idn.GetAscii(match.Groups[2].Value);
-
-                    return match.Groups[1].Value + domainName;
-                }
-            }
-            catch (RegexMatchTimeoutException e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-
-            try
-            {
-                return Regex.IsMatch(email,
-                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
+            return new EmailAddressAttribute().IsValid(email);
         }
     }
 }

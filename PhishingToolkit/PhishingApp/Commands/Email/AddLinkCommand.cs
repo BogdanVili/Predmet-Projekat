@@ -1,4 +1,5 @@
-﻿using PhishingApp.Model;
+﻿using PhishingApp.Helpers;
+using PhishingApp.Model;
 using System;
 using System.Windows.Input;
 
@@ -48,7 +49,6 @@ namespace PhishingApp.Commands
             return true;
         }
 
-
         public void Execute(object parameter)
         {
             if (!_emailModel.LinkToAdd.Contains("http://") && !_emailModel.LinkToAdd.Contains("https://"))
@@ -60,30 +60,7 @@ namespace PhishingApp.Commands
 
             if (_emailModel.Body != null)
             {
-                if (_emailModel.HtmlBody == null)
-                {
-                    _emailModel.HtmlBody = "\n" + "<p  style=\"white-space: pre-line\">" + _emailModel.Body + "</p>" + "\n";
-                    _emailModel.HtmlBodyHelper = _emailModel.Body;
-
-                    // za preview
-                    _emailModel.HtmlForPreview = "\n" + "<p  style=\"white-space: pre-line\">" + _emailModel.Body + "</p>" + "\n";
-                }
-                else
-                {
-                    string temp = _emailModel.Body.Substring(_emailModel.HtmlBodyHelper.Length);
-
-                    if (temp == "")
-                    {
-
-                    }
-                    else
-                    {
-                        _emailModel.HtmlBody += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
-                        // za preview
-                        _emailModel.HtmlForPreview += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
-                        _emailModel.HtmlBodyHelper = _emailModel.Body;
-                    }
-                }
+                EmailHelper.FormatBody(_emailModel);
             }
 
             _emailModel.HtmlBody += string.Format(@"<a href=""{0}""\>{1}</a>", _emailModel.LinkToAdd, _emailModel.TextForLink);
