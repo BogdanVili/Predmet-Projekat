@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Contracts;
 using PhishingApp.Config;
 using PhishingApp.Helpers;
 using PhishingApp.Service;

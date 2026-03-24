@@ -1,5 +1,4 @@
-﻿using Common;
-using Contracts;
+﻿using Contracts;
 using PhishingApp.Commands;
 using PhishingApp.Database;
 using PhishingApp.Helpers;

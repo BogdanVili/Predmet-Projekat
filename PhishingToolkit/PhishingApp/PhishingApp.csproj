@@ -79,6 +79,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -111,6 +112,8 @@
     <Compile Include="Commands\Email\ImportEmailTemplateCommand.cs" />
     <Compile Include="Commands\Email\PreviewEmailCommand.cs" />
     <Compile Include="Commands\Email\SendEmailCommand.cs" />
+    <Compile Include="Contracts\FormData.cs" />
+    <Compile Include="Contracts\IFormMessage.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.cs" />
     <Compile Include="Migrations\202603191352044_ChangedNameEmailsSent.Designer.cs">
@@ -231,12 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Contracts\Common.csproj">
-      <Project>{3c75ebeb-cb1f-4516-aa37-b1baffc03a5c}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Webpages\Default\index.html" />

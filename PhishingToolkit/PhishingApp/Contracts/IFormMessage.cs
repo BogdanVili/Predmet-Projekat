@@ -1,8 +1,7 @@
-﻿using Contracts;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.ServiceModel.Web;
 
-namespace Common
+namespace Contracts
 {
     [ServiceContract]
     public interface IFormMessage
